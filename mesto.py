@@ -1,5 +1,4 @@
 import tkinter, random
-import time
 
 sirka, vyska = 500, 300
 canvas = tkinter.Canvas(width=sirka, height=vyska)
@@ -33,14 +32,15 @@ def posun():
     if sipka: # если нажата стрелка
         print("🦆")
         poschodia = random.randint(1, stare_poschodia) # генерируем число от 1 до 0
-        # sipka = not sipka # сбрасываем состояние стрелки
+        sipka = not sipka # сбрасываем состояние стрелки
     else:
+        print("🐷")
         poschodia = random.randint(1, 25) # генерируем число от 1 до 25
         stare_poschodia = poschodia # присваиваем сгенерированное переменной stare poschodia
 
     budova(sirka, poschodia, farba) # рисуем дома
 
-    canvas.after(500_000, posun()) # снова вызываем фцию после << --- надо вызывать фцию
+    canvas.after(5, posun) # снова вызываем фцию после 500
     print("end posun")
 
 
@@ -49,9 +49,10 @@ def obmedz(event):
     global sipka # используем глобальную
     sipka = not sipka  # neguj sipku # сбрасываем значение на противоположное
 
-canvas.bind_all('<KeyPress-Down>', obmedz) # << -- переместили привязку. иначе она не вызывается
 
 mesto() # рисуем домики
 posun() # сдвигаем домики
 
+canvas.bind_all('<Down>', obmedz) # << -- переместили привязку. иначе она не вызывается
 
+canvas.mainloop()
